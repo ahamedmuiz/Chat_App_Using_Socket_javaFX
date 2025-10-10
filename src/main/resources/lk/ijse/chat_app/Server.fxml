@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="lk.ijse.chat_app.Controller.ServerController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+    <TextArea fx:id="chatDisplayArea" editable="false" promptText="Client Chat History" VBox.vgrow="ALWAYS"/>
+
+    <HBox spacing="10.0" alignment="CENTER_LEFT">
+        <TextField fx:id="messageInput" promptText="Type message and press Enter or Send..." HBox.hgrow="ALWAYS"/>
+        <Button fx:id="sendButton" text="Send" onAction="#sendMessage"/>
+    </HBox>
+
+</VBox>
