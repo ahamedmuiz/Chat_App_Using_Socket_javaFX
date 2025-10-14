@@ -5,16 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
 
 public class Server extends Application {
     public static void main(String[] args) {
+
+
         launch(args);
     }
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Server.class.getResource("Server.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 400, 400);
         stage.setTitle("Server");
         stage.setScene(scene);
         stage.show();
