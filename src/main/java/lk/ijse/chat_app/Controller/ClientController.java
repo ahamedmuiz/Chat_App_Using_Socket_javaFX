@@ -47,7 +47,7 @@ public class ClientController implements Initializable {
             try {
                 while (true) {
                     final String message = dataInputStream.readUTF();
-                     chatDisplayArea.appendText("Server: " + message + "\n"));
+                     chatDisplayArea.appendText("Server: " + message + "\n");
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
