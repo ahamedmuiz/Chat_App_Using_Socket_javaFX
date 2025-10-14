@@ -1,6 +1,5 @@
 package lk.ijse.chat_app.Controller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,9 +28,9 @@ public class ServerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        new Thread(() -> {
+        new Thread(()->{
             try {
-                serverSocket = new ServerSocket(8080);
+               serverSocket = new ServerSocket(8080);
 
                 socket = serverSocket.accept();
                  chatDisplayArea.appendText("Client Connected!\n");
@@ -39,25 +38,19 @@ public class ServerController implements Initializable {
                 dataInputStream = new DataInputStream(socket.getInputStream());
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-                readMessages();
+                while(true){
+                    String message = dataInputStream.readUTF();
+                    chatDisplayArea.appendText("Client: " + message + "\n");
+                }
+
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
+
             }
         }).start();
     }
 
-    private void readMessages() {
-        new Thread(() -> {
-            try {
-                while (true) {
-                    final String message = dataInputStream.readUTF();
-                     chatDisplayArea.appendText("Client: " + message + "\n");
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-    }
 
     @FXML
     void sendMessage(ActionEvent event) {

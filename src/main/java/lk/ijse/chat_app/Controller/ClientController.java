@@ -1,6 +1,5 @@
 package lk.ijse.chat_app.Controller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,7 +26,7 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        new Thread(() -> {
+        new Thread(()->{
             try {
                 socket = new Socket("127.0.0.1", 8080);
                  chatDisplayArea.appendText("Connected to Server!\n");
@@ -35,25 +34,19 @@ public class ClientController implements Initializable {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataInputStream = new DataInputStream(socket.getInputStream());
 
-                readMessages();
+                while (true) {
+
+                    final String message = dataInputStream.readUTF();
+                    chatDisplayArea.appendText("Server: " + message + "\n");
+                }
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
         }).start();
     }
 
-    private void readMessages() {
-        new Thread(() -> {
-            try {
-                while (true) {
-                    final String message = dataInputStream.readUTF();
-                     chatDisplayArea.appendText("Server: " + message + "\n");
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-    }
 
     @FXML
     void sendMessage(ActionEvent event) {
@@ -68,5 +61,6 @@ public class ClientController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+
     }
 }
