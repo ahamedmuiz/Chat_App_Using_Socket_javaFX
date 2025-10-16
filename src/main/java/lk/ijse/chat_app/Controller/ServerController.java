@@ -31,17 +31,20 @@ public class ServerController implements Initializable {
         new Thread(()->{
             try {
                serverSocket = new ServerSocket(8080);
+               chatDisplayArea.appendText("Server Started\n");
 
-                socket = serverSocket.accept();
+               socket = serverSocket.accept();
+
                  chatDisplayArea.appendText("Client Connected!\n");
 
                 dataInputStream = new DataInputStream(socket.getInputStream());
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-                while(true){
+                while(true) {
                     String message = dataInputStream.readUTF();
                     chatDisplayArea.appendText("Client: " + message + "\n");
                 }
+
 
 
             } catch (IOException e) {
@@ -55,7 +58,7 @@ public class ServerController implements Initializable {
     @FXML
     void sendMessage(ActionEvent event) {
         String message = messageInput.getText();
-        if (socket != null && !message.trim().isEmpty()) {
+        if (socket != null && !message.isEmpty()) {
             try {
                 dataOutputStream.writeUTF(message);
                 dataOutputStream.flush();
