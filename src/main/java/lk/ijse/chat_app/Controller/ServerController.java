@@ -30,21 +30,18 @@ public class ServerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         new Thread(()->{
             try {
-               serverSocket = new ServerSocket(8080);
-               chatDisplayArea.appendText("Server Started\n");
+                serverSocket = new ServerSocket(8080);
 
-               socket = serverSocket.accept();
-
-                 chatDisplayArea.appendText("Client Connected!\n");
+                socket = serverSocket.accept();
+                chatDisplayArea.appendText("Client Connected!\n");
 
                 dataInputStream = new DataInputStream(socket.getInputStream());
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-                while(true) {
+                while(true){
                     String message = dataInputStream.readUTF();
                     chatDisplayArea.appendText("Client: " + message + "\n");
                 }
-
 
 
             } catch (IOException e) {
@@ -58,7 +55,7 @@ public class ServerController implements Initializable {
     @FXML
     void sendMessage(ActionEvent event) {
         String message = messageInput.getText();
-        if (socket != null && !message.isEmpty()) {
+        if (socket != null && !message.trim().isEmpty()) {
             try {
                 dataOutputStream.writeUTF(message);
                 dataOutputStream.flush();
@@ -68,5 +65,9 @@ public class ServerController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+@FXML
+    public void sendImg(ActionEvent actionEvent) {
     }
 }

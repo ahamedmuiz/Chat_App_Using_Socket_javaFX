@@ -29,15 +29,14 @@ public class ClientController implements Initializable {
         new Thread(()->{
             try {
                 socket = new Socket("127.0.0.1", 8080);
-
-                 chatDisplayArea.appendText("Connected to Server!\n");
+                chatDisplayArea.appendText("Connected to Server!\n");
 
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataInputStream = new DataInputStream(socket.getInputStream());
 
                 while (true) {
 
-                     String message = dataInputStream.readUTF();
+                    final String message = dataInputStream.readUTF();
                     chatDisplayArea.appendText("Server: " + message + "\n");
                 }
 
@@ -48,10 +47,11 @@ public class ClientController implements Initializable {
         }).start();
     }
 
+
     @FXML
     void sendMessage(ActionEvent event) {
         String message = messageInput.getText();
-        if (socket != null && !message.isEmpty()) {
+        if (socket != null && !message.trim().isEmpty()) {
             try {
                 dataOutputStream.writeUTF(message);
                 dataOutputStream.flush();
@@ -63,5 +63,8 @@ public class ClientController implements Initializable {
         }
 
     }
-}
 
+@FXML
+    public void sendImg(ActionEvent actionEvent) {
+    }
+}
